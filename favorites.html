@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCHINDA - Favoris</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>❤️ Mes Favoris</h1>
+
+  <div id="favorites-list">
+    <!-- Produits favoris chargés via JS -->
+  </div>
+
+  <a href="cart.html" class="btn" style="display:block; text-align:center; margin:20px;">
+    🛒 Voir le panier
+  </a>
+
+  <script>
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const favoritesList = document.getElementById("favorites-list");
+
+    function renderFavorites() {
+      favoritesList.innerHTML = "";
+      if(favorites.length === 0){
+        favoritesList.innerHTML = "<p>Vous n'avez aucun favori pour le moment.</p>";
+        return;
+      }
+
+      favorites.forEach((p, index) => {
+        const item = document.createElement("div");
+        item.className = "favorite-item";
+        item.innerHTML = `
+          <span>${p.name}</span>
+          <button onclick="removeFavorite(${index})">❌ Retirer</button>
+          <button onclick="addToCart(${p.id}, '${p.name}', ${p.price || 0})">🛒 Ajouter au panier</button>
+        `;
+        favoritesList.appendChild(item);
+      });
+    }
+
+    function removeFavorite(index) {
+      favorites.splice(index, 1);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      renderFavorites();
+    }
+
+    function addToCart(id, name, price) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ id, name, price });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(name + " ajouté au panier !");
+    }
+
+    renderFavorites();
+  </script>
+</body>
+  </html>
