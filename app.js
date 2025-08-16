@@ -83,3 +83,26 @@ function showNotification(message){
     notif.remove();
   }, 5000); // disparaît après 5 secondes
     }
+// --- Filtrage des produits ---
+const searchInput = document.getElementById("search-input");
+
+searchInput.addEventListener("input", function() {
+  const searchTerm = this.value.toLowerCase();
+  const container = document.getElementById("product-list");
+  container.innerHTML = "";
+
+  products[category]
+    .filter(p => p.name.toLowerCase().includes(searchTerm))
+    .forEach(p => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${p.img}" alt="${p.name}">
+        <h4>${p.name}</h4>
+        <p class="price">${p.price} FCFA</p>
+        <button class="btn-add" onclick="addToCart(${p.id}, '${p.name}', ${p.price})">Ajouter 🛒</button>
+        <button class="btn-add" style="background:#fca311;" onclick="addToFavorites(${p.id}, '${p.name}')">❤️ Favori</button>
+      `;
+      container.appendChild(card);
+    });
+});
