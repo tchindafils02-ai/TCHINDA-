@@ -50,3 +50,36 @@ function addToFavorites(id, name) {
   localStorage.setItem("favorites", JSON.stringify(favorites));
   alert(name + " ajouté aux favoris ❤️");
       }
+// --- Notifications simples ---
+const lastSeenIdKey = "lastSeenProductId_" + category;
+let lastSeenId = parseInt(localStorage.getItem(lastSeenIdKey)) || 0;
+
+// Vérifier si un nouveau produit est disponible
+const newestProduct = products[category]?.[products[category].length - 1];
+if(newestProduct && newestProduct.id > lastSeenId){
+  showNotification("🎉 Nouveau produit disponible : " + newestProduct.name);
+  localStorage.setItem(lastSeenIdKey, newestProduct.id);
+}
+
+// Fonction pour afficher notification
+function showNotification(message){
+  const notif = document.createElement("div");
+  notif.className = "notification";
+  notif.innerText = message;
+  document.body.appendChild(notif);
+
+  // Style simple
+  notif.style.position = "fixed";
+  notif.style.bottom = "20px";
+  notif.style.right = "20px";
+  notif.style.background = "#fca311";
+  notif.style.color = "#fff";
+  notif.style.padding = "10px 20px";
+  notif.style.borderRadius = "10px";
+  notif.style.boxShadow = "0 4px 6px rgba(0,0,0,0.2)";
+  notif.style.zIndex = "1000";
+
+  setTimeout(() => {
+    notif.remove();
+  }, 5000); // disparaît après 5 secondes
+    }
