@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCHINDA - Catalogue</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Vente En Ligne TCHINDA</h1>
+
+  <div class="catalog-container">
+    <input type="text" class="search-bar" placeholder="Rechercher un catalogue...">
+
+    <div class="catalog-grid">
+      <div class="catalog-item" onclick="openCategory('chaussures-hommes')">
+        <h3>Chaussures Hommes</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('chaussures-femmes')">
+        <h3>Chaussures Femmes</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('chaussures-enfants')">
+        <h3>Chaussures Enfants</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('vetements-hommes')">
+        <h3>Vêtements Hommes</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('vetements-femmes')">
+        <h3>Vêtements Femmes</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('vetements-enfants')">
+        <h3>Vêtements Enfants</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('bijoux')">
+        <h3>Bijoux</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('appareils-electriques')">
+        <h3>Appareils Électriques</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('mobiliers')">
+        <h3>Mobiliers</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('materiels-informatiques')">
+        <h3>Matériels Informatiques</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('materiels-travaux')">
+        <h3>Matériels de Travaux</h3>
+      </div>
+      <div class="catalog-item" onclick="openCategory('jouets')">
+        <h3>Jouets</h3>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Fonction pour ouvrir une catégorie
+    function openCategory(category) {
+      window.location.href = "products.html?cat=" + category;
+    }
+  </script>
+</body>
+        </html>
