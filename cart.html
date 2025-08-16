@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCHINDA - Panier</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🛒 Mon Panier</h1>
+
+  <div id="cart-list">
+    <!-- Produits du panier -->
+  </div>
+
+  <h3 id="cart-total">Total: 0 FCFA</h3>
+
+  <h2>Formulaire de commande</h2>
+  <form id="order-form">
+    <input type="text" id="first-name" placeholder="Prénom" required>
+    <input type="text" id="last-name" placeholder="Nom" required>
+    <input type="tel" id="phone" placeholder="Téléphone" required>
+    <input type="text" id="city" placeholder="Ville" required>
+    <input type="text" id="address" placeholder="Adresse complète" required>
+    <button type="submit">✅ Passer la commande</button>
+  </form>
+
+  <script>
+    // --- Récupérer le panier ---
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartList = document.getElementById("cart-list");
+    const cartTotal = document.getElementById("cart-total");
+
+    function renderCart() {
+      cartList.innerHTML = "";
+      let total = 0;
+      cart.forEach((p, index) => {
+        total += p.price;
+        const item = document.createElement("div");
+        item.className = "cart-item";
+        item.innerHTML = `
+          <span>${p.name} - ${p.price} FCFA</span>
+          <button onclick="removeItem(${index})">❌</button>
+        `;
+        cartList.appendChild(item);
+      });
+      cartTotal.innerText = "Total: " + total + " FCFA";
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    renderCart();
+
+    // --- Formulaire de commande ---
+    const form = document.getElementById("order-form");
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      if(cart.length === 0){
+        alert("Votre panier est vide !");
+        return;
+      }
+
+      const order = {
+        firstName: document.getElementById("first-name").value,
+        lastName: document.getElementById("last-name").value,
+        phone: document.getElementById("phone").value,
+        city: document.getElementById("city").value,
+        address: document.getElementById("address").value,
+        items: cart
+      };
+
+      // Générer message WhatsApp
+      let message = `Commande TCHINDA:\n`;
+      message += `Nom: ${order.firstName} ${order.lastName}\n`;
+      message += `Téléphone: ${order.phone}\n`;
+      message += `Ville: ${order.city}\n`;
+      message += `Adresse: ${order.address}\n\n`;
+      message += `Produits:\n`;
+      order.items.forEach(p => {
+        message += `- ${p.name}: ${p.price} FCFA\n`;
+      });
+
+      const encodedMessage = encodeURIComponent(message);
+      const waUrl = `https://wa.me/237682028484?text=${encodedMessage}`;
+      window.open(waUrl, "_blank");
+
+      // Vider le panier
+      localStorage.removeItem("cart");
+    });
+  </script>
+</body>
+    </html>
