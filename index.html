@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCHINDA - Accueil</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div class="home-container">
+    <img src="icon.png" alt="Logo TCHINDA" class="logo">
+    <h1 class="slogan">La référence en ligne pour vos achats</h1>
+    <a href="catalog.html" class="btn">Entrer</a>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+      </html>
